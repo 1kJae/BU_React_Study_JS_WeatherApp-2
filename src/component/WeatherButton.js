@@ -1,19 +1,26 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
 
-export const WeatherButton = ({ cities, setCity }) => {
-  console.log("cities?", cities);
+export const WeatherButton = ({ cities, city, setCity, onCurrentLocationClick }) => {
   return (
     <div>
-        <Button variant="warning">Current Location</Button>
+        <Button
+            variant={city === '' ? 'primary' : 'warning'} 
+            onClick={onCurrentLocationClick}
+            style={{ marginRight: '5px' }}
+        >
+            Current Location
+        </Button>
+
         {cities.map((item, index) => (
-          <Button 
-            variant='warning' 
-            key={index} 
-            onClick={() => setCity(item)}
-          >
-            {item}
-          </Button>
+            <Button
+                key={index}
+                variant={city === item ? 'primary' : 'warning'} // [변경2] 클릭된 버튼 표시
+                onClick={() => setCity(item)}
+                style={{ marginRight: '5px' }}
+                >
+                {item}
+            </Button>
         ))}
     </div>
   );
