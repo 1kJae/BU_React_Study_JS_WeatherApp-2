@@ -9,8 +9,8 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState('');
   const [loading, setLoading] = useState(false);
-  const [searchInput, setSearchInput] = useState(''); // +
-  const [suggestions, setSuggestions] = useState([]); // +
+  const [searchInput, setSearchInput] = useState(''); 
+  const [suggestions, setSuggestions] = useState([]); 
 
   const cities = ['paris', 'new york', 'tokyo', 'seoul'];
   
@@ -19,16 +19,16 @@ function App() {
       const weatherMain = weather.weather[0].main.toLowerCase();
       if (weatherMain.includes('rain')) {
         document.body.style.backgroundImage =
-          "url('https://png.pngtree.com/thumb_back/fw800/background/20190222/ourmid/pngtree-night-sky-raining-cartoon-illustration-background-design-skymoonrainrainillustration-backgroundadvertising-backgroundbackground-image_59483.jpg`)";
+          "url('https://images.unsplash.com/photo-1493314894560-5c412a56c17c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFpbnklMjB3ZWF0aGVyfGVufDB8fDB8fHww`)";
       } else if (weatherMain.includes('cloud')) {
         document.body.style.backgroundImage =
-          "url('https://www.shutterstock.com/image-illustration/abstract-cloudy-sky-background-thick-260nw-2222157737.jpg')";
+          "url('https://grangers.co.uk/cdn/shop/articles/engin-akyurt-gJILnne_HFg-unsplash.jpg?v=1711643298')";
       } else if (weatherMain.includes('clear')) {
         document.body.style.backgroundImage =
-          "url('https://img.freepik.com/free-vector/sun-light-with-clouds-sky-background_1017-38299.jpg?semt=ais_hybrid&w=740')";
+          "url('https://clarksvillenow.sagacom.com/wp-content/blogs.dir/43/files/2020/10/shutterstock_206307496.jpg')";
       } else {
         document.body.style.backgroundImage =
-          "url('https://media.istockphoto.com/id/1450092137/ko/%EB%B2%A1%ED%84%B0/%EC%95%88%EA%B0%9C-%EC%97%B0%EA%B8%B0-%EB%B0%94%EB%8B%A5%EC%97%90-%ED%9D%B0-%EC%8A%A4%EB%AA%A8%EA%B7%B8-%EA%B5%AC%EB%A6%84-%EC%95%88%EA%B0%9C-%EC%95%88%EA%B0%9C.jpg?s=612x612&w=0&k=20&c=UdsOU9KgL6oJ4_Jkf8S9NWFkm1RC0cg7GMOM_ng7rVw=')";
+          "url('https://cloudfront-us-east-1.images.arcpublishing.com/gray/JFDZ7U577FFBTCTSLUKDQDSAYQ.png')";
       }
     }
   }, [weather]);
@@ -42,7 +42,7 @@ function App() {
   }, []);
 
   const getWeatherByCurrentLocation = async(lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=d714a94abc375fdc877a122ff4402bab&units=metric`
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=d714a94abc375fdc877a122ff4402bab&units=metric&lang=kr`
     try {
       setLoading(true);
     let response = await fetch(url)
@@ -56,7 +56,7 @@ function App() {
   }
 
   const getWeatherByCity = useCallback(async() => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d714a94abc375fdc877a122ff4402bab&units=metric`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d714a94abc375fdc877a122ff4402bab&units=metric&lang=kr`;
     try {
       setLoading(true);
     let response = await fetch(url)
@@ -91,7 +91,7 @@ function App() {
     const value = e.target.value;
     setSearchInput(value);
     if (value.length > 0) {
-        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=d714a94abc375fdc877a122ff4402bab`);
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=d714a94abc375fdc877a122ff4402bab&lang=kr`);
         const data = await response.json();
         const cityNames = data.map(city => city.name);
         setSuggestions(cityNames);
@@ -126,16 +126,17 @@ function App() {
         </div>
       ) : (
       <div className='container'>
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '20px', position: 'relative' }}>
         <input
               type="text"
               placeholder="Search city..."
               value={searchInput}
               onChange={handleSearchChange}
+              style={{ padding: '8px', borderRadius: '8px' }}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '8px 12px' }}>Search</button>
         {suggestions.length > 0 && (
-              <ul style={{ background: 'white', marginTop: '5px' }}>
+              <ul className="suggestion-box">
                 {suggestions.map((suggestedCity, idx) => (
                   <li
                     key={idx}
@@ -150,8 +151,10 @@ function App() {
         </div>
 
         <WeatherBox weather={weather}/>
-        <WeatherButton cities={cities} city={city} setCity={setCity} onCurrentLocationClick={handleCurrentLocationClick}
-        />
+        <div style={{ marginTop: '20px' }}>
+          <WeatherButton cities={cities} city={city} setCity={setCity} onCurrentLocationClick={handleCurrentLocationClick}
+          />
+        </div>
       </div>
       )}
     </div>
