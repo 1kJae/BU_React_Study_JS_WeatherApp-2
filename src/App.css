@@ -3,8 +3,8 @@ body {
   height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
-  margin: 0;
-  padding: 0;
+  background-position: center;
+  transition: background-image 1s ease-in-out;
 }
 
 .container {
@@ -19,9 +19,9 @@ body {
   border: 3px solid white;
   padding: 50px;
   border-radius: 30px;
-  background-color: azure;
+  background-color: white;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-  min-width: 350px;
+  min-width: 500px;
   max-width: 500px;
   text-align: center;
 }

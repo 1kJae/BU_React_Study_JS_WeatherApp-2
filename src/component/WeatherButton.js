@@ -5,7 +5,7 @@ export const WeatherButton = ({ cities, city, setCity, onCurrentLocationClick })
   return (
     <div>
         <Button
-            variant={city === '' ? 'primary' : 'warning'} 
+            variant={city === '' ? 'dark' : 'light'} 
             onClick={onCurrentLocationClick}
             style={{ marginRight: '5px' }}
         >
@@ -15,7 +15,7 @@ export const WeatherButton = ({ cities, city, setCity, onCurrentLocationClick })
         {cities.map((item, index) => (
             <Button
                 key={index}
-                variant={city === item ? 'primary' : 'warning'} // [변경2] 클릭된 버튼 표시
+                variant={city === item ? 'dark' : 'light'} 
                 onClick={() => setCity(item)}
                 style={{ marginRight: '5px' }}
                 >
